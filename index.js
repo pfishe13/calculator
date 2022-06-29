@@ -1,43 +1,24 @@
 
 function add(left, right) {
-    // console.log("calling add");
-    // return left + right;
-    let value = returnWithCorrectDecimals(left + right);
-    return value;
+    return returnWithCorrectDecimals(left + right);
+    // return value;
 }
 
 function subtract(left, right) {
-    // console.log("calling subtract");
-    // return left - right;
-    let value = returnWithCorrectDecimals(left - right);
-    return value;
+    return returnWithCorrectDecimals(left - right);
+    // return value;
 }
 
 function multiply(left, right) {
-    // console.log("calling multiply");
-    // return left * right;
-    // return (left * right).toFixed(2);
-    let value = returnWithCorrectDecimals(left * right);
-    return value;
+    return returnWithCorrectDecimals(left * right);
 }
 
 function divide(left, right) {
-    // console.log("calling divide");
     if (right === 0) {
         return "Sorry, Can't Divide By Zero";
     }
     let value = left / right;
-    let stringValue = value.toString();
-    if(stringValue.includes('.')) {
-        stringValue = parseFloat(stringValue).toFixed(2);
-        return Number(stringValue);
-    } else {
-        console.log(typeof value);
-        return value;
-    }
-
-    value = returnWithCorrectDecimals(value);
-    return value;
+    return returnWithCorrectDecimals(value);
 }
 
 function returnWithCorrectDecimals(numInput) {
@@ -54,11 +35,11 @@ function operate(left, op, right) {
     switch(op) {
         case '+':
             return add(left, right);
-        case '-':
+        case '−':
             return subtract(left, right);
-        case '*':
+        case '×':
             return multiply(left, right);
-        case '/':
+        case '÷':
             return divide(left, right);
         default:
             return 0;
@@ -88,8 +69,17 @@ function setEventListener() {
 }
 
 function updateCalculation(e) {
-    console.log(e.target.id);
-    if (e.target.textContent === "Clear") {
+    let clickedButtonID = e.target.id;
+    let clickedButtonText = e.target.textContent;
+
+    if(clickedButtonID[0] === "b") {
+        clickedButtonID = clickedButtonID[1];
+    }
+
+    // console.log("Clicked Button ID", clickedButtonID);
+    // console.log("Clicked Button Text", clickedButtonText);
+
+    if (clickedButtonID === "clear") {
         currentInput["newInput"] = null;
         currentInput["left"] = null;
         currentInput["operator"] = null;
@@ -98,27 +88,23 @@ function updateCalculation(e) {
         computed = null;
     }
     
-    if (e.target.textContent === "=" && currentInput["left"] !== null && currentInput["right"] === null) {
+    if (clickedButtonID === "equal" && currentInput["left"] !== null && currentInput["right"] === null) {
         return;
     }
 
-    if ( (e.target.textContent === "+" || e.target.textContent === "-" || e.target.textContent === "*" || e.target.textContent === "/") && currentInput["left"] !== null && currentInput["operator"] !== null && currentInput["right"] === null) {
+    if ( (clickedButtonID === "add" || clickedButtonID === "subtract" || clickedButtonID === "multiply" || clickedButtonID === "divide") && currentInput["left"] !== null && currentInput["operator"] !== null && currentInput["right"] === null) {
         return;
     }
     
     displayValue = `${displayValue}${e.target.textContent}`;
 
     // If the input is a number between 0 and 9
-    if( (Number(e.target.textContent) >= 0 && Number(e.target.textContent) <= 9) || e.target.textContent === "." ) {
-        console.log(e.target.textContent);
+    if( (Number(clickedButtonText) >= 0 && Number(clickedButtonText) <= 9) || clickedButtonText === "." ) {
         if (currentInput["newInput"] === null) {
-            //console.log("Was blank");
-            currentInput["newInput"] = e.target.textContent;
+            currentInput["newInput"] = clickedButtonText;
         } else {
-            //console.log("Not blank");
-            currentInput["newInput"] += e.target.textContent;
+            currentInput["newInput"] += clickedButtonText;
         }
-        //console.log("Exiting number loop");
     }
     
     if(currentInput["operator"] === null) {
@@ -132,7 +118,7 @@ function updateCalculation(e) {
     }
 
     if(currentInput["left"] !== null){
-        if(e.target.textContent === "=" || e.target.textContent === "+" || e.target.textContent === "-" || e.target.textContent === "*" || e.target.textContent === "/" ) {
+        if(clickedButtonID === "equal" || clickedButtonID === "add" || clickedButtonID === "subtract" || clickedButtonID === "multiply" || clickedButtonID === "divide" ) {
             if(currentInput["operator"] !== null && currentInput["left"] !== null && currentInput["right"] !== null ) {
                 let leftNum = Number(currentInput["left"]);
                 let rightNum = Number(currentInput["right"]);
@@ -143,38 +129,27 @@ function updateCalculation(e) {
                     currentInput["left"] = computed.toString();
                     currentInput["newInput"] = null;
                     currentInput["right"] = null;
-                    // currentInput["operator"] = null;
-                    if (e.target.textContent === "=") {
+                    if (clickedButtonText === "=") {
                         currentInput["operator"] = null;
                         displayValue = `${currentInput["left"]}`;
                         
                     } else {
-                        currentInput["operator"] = e.target.textContent;
+                        currentInput["operator"] = clickedButtonText;
                         displayValue = `${currentInput["left"]}${currentInput["operator"]}`;
                     }
                 }
 
             } else if (currentInput["operator"] === null) {
                 if(currentInput["left"] !== null) {
-                    currentInput["operator"] = e.target.textContent;
+                    currentInput["operator"] = clickedButtonText;
                 }
                 currentInput["newInput"] = null;
-            }
-    
-            // let op = e.target.textContent;
-        
+            }        
         }
 
     } else {
         displayValue = "";
     }
-
-    console.log(currentInput);
-
-
-
-
-
     updateDisplayValue();
 }
 
