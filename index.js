@@ -64,8 +64,8 @@ let currentInput = {
 }
 
 function updateDisplayValue() {
-    let displayContainerLong = document.querySelector('.calculator-display-long');
-    displayContainerLong.textContent = `${displayValue}`;
+    let displayContainer = document.querySelector('.calculator-display');
+    displayContainer.textContent = `${displayValue}`;
 }
 
 function setEventListener() {
