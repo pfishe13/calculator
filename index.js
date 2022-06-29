@@ -1,17 +1,24 @@
 
 function add(left, right) {
     // console.log("calling add");
-    return left + right;
+    // return left + right;
+    let value = returnWithCorrectDecimals(left + right);
+    return value;
 }
 
 function subtract(left, right) {
     // console.log("calling subtract");
-    return left - right;
+    // return left - right;
+    let value = returnWithCorrectDecimals(left - right);
+    return value;
 }
 
 function multiply(left, right) {
     // console.log("calling multiply");
-    return left * right;
+    // return left * right;
+    // return (left * right).toFixed(2);
+    let value = returnWithCorrectDecimals(left * right);
+    return value;
 }
 
 function divide(left, right) {
@@ -27,6 +34,19 @@ function divide(left, right) {
     } else {
         console.log(typeof value);
         return value;
+    }
+
+    value = returnWithCorrectDecimals(value);
+    return value;
+}
+
+function returnWithCorrectDecimals(numInput) {
+    let stringValue = numInput.toString();
+    if(stringValue.includes('.')) {
+        stringValue = parseFloat(stringValue).toFixed(2);
+        return Number(stringValue);
+    } else {
+        return numInput;
     }
 }
 
@@ -56,8 +76,8 @@ let currentInput = {
 }
 
 function updateDisplayValue() {
-    let displayContainer = document.querySelector('.calculator-display');
-    displayContainer.textContent = `${displayValue}`;
+    let displayContainerLong = document.querySelector('.calculator-display-long');
+    displayContainerLong.textContent = `${displayValue}`;
 }
 
 function setEventListener() {
@@ -68,7 +88,7 @@ function setEventListener() {
 }
 
 function updateCalculation(e) {
-    
+    console.log(e.target.id);
     if (e.target.textContent === "Clear") {
         currentInput["newInput"] = null;
         currentInput["left"] = null;
@@ -89,7 +109,7 @@ function updateCalculation(e) {
     displayValue = `${displayValue}${e.target.textContent}`;
 
     // If the input is a number between 0 and 9
-    if( Number(e.target.textContent) >= 0 && Number(e.target.textContent) <= 9) {
+    if( (Number(e.target.textContent) >= 0 && Number(e.target.textContent) <= 9) || e.target.textContent === "." ) {
         console.log(e.target.textContent);
         if (currentInput["newInput"] === null) {
             //console.log("Was blank");

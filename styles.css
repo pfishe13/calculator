@@ -11,6 +11,11 @@ body {
   background-color: bisque;
   height: 125px;
   grid-column: 1 / 5;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  font-size: 40px;
+  font-weight: 300;
 }
 
 .calculator-buttons {
@@ -20,11 +25,20 @@ body {
 }
 
 .calculator-button {
+  font-size: 30px;
+  font-weight: 200;
   height: 100px;
   background-color: beige;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
 }
 
-.equal {
+#equal {
   grid-column: 3 / 5;
+}
+
+#clear {
+  grid-column: 1/3;
 }
