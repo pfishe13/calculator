@@ -21,6 +21,11 @@ function divide(left, right) {
     return returnWithCorrectDecimals(value);
 }
 
+function power(left, right) {
+    let value = left ** right;
+    return returnWithCorrectDecimals(value);
+}
+
 function returnWithCorrectDecimals(numInput) {
     let stringValue = numInput.toString();
     if(stringValue.includes('.')) {
@@ -41,6 +46,8 @@ function operate(left, op, right) {
             return multiply(left, right);
         case '÷':
             return divide(left, right);
+        case '^':
+            return power(left, right);
         default:
             return 0;
     }
@@ -92,7 +99,7 @@ function updateCalculation(e) {
         return;
     }
 
-    if ( (clickedButtonID === "add" || clickedButtonID === "subtract" || clickedButtonID === "multiply" || clickedButtonID === "divide") && currentInput["left"] !== null && currentInput["operator"] !== null && currentInput["right"] === null) {
+    if ( (clickedButtonID === "add" || clickedButtonID === "subtract" || clickedButtonID === "multiply" || clickedButtonID === "divide" || clickedButtonID === "power") && currentInput["left"] !== null && currentInput["operator"] !== null && currentInput["right"] === null) {
         return;
     }
     
@@ -118,7 +125,7 @@ function updateCalculation(e) {
     }
 
     if(currentInput["left"] !== null){
-        if(clickedButtonID === "equal" || clickedButtonID === "add" || clickedButtonID === "subtract" || clickedButtonID === "multiply" || clickedButtonID === "divide" ) {
+        if(clickedButtonID === "equal" || clickedButtonID === "add" || clickedButtonID === "subtract" || clickedButtonID === "multiply" || clickedButtonID === "divide" || clickedButtonID === "power") {
             if(currentInput["operator"] !== null && currentInput["left"] !== null && currentInput["right"] !== null ) {
                 let leftNum = Number(currentInput["left"]);
                 let rightNum = Number(currentInput["right"]);
